@@ -13,7 +13,8 @@ def load_data(filepath):
 
 
 def get_most_frequent_words(normalized_text):
-    return Counter(normalized_text.split(" ")).most_common(10)
+    top_words_count = 10
+    return Counter(normalized_text.split(" ")).most_common(top_words_count)
 
 
 def normalize_text(text):
