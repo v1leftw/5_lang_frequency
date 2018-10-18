@@ -1,37 +1,13 @@
 import os
 from collections import Counter
 import argparse
-import codecs
 import re
-
-'''
-two try blocks with same exception 
-to be sure to read the file on any encoding.
-Actually I don't know have to handle this encoding operations.
-Maybe be you can suggest something? :)
-Works:
-UTF-8
-ANSI
-UNICODE
-
-RUSSIAN
-ENGLISH
-FRENCH
-ARABIC
-'''
 
 
 def load_data(filepath):
     if os.path.isfile(filepath):
-        try:
-            with codecs.open(filepath, "r", encoding="utf-8") as text_file:
-                return text_file.read()
-        except UnicodeDecodeError:
-            try:
-                with codecs.open(filepath, "r") as text_file:
-                    return text_file.read()
-            except UnicodeDecodeError:
-                exit("Can't read the file")
+        with open(filepath, "r") as text_file:
+            return text_file.read()
 
 
 def get_most_frequent_words(normalized_text):
