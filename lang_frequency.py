@@ -1,15 +1,37 @@
 import os
-from string import punctuation
 from collections import Counter
 import argparse
+import codecs
+import re
+
+'''
+two try blocks with same exception 
+to be sure to read the file on any encoding.
+Actually I don't know have to handle this encoding operations.
+Maybe be you can suggest something? :)
+Works:
+UTF-8
+ANSI
+UNICODE
+
+RUSSIAN
+ENGLISH
+FRENCH
+ARABIC
+'''
 
 
 def load_data(filepath):
     if os.path.isfile(filepath):
-        with open(filepath, "r", encoding="ansi") as text_file:
-            return text_file.read()
-    else:
-        return None
+        try:
+            with codecs.open(filepath, "r", encoding="utf-8") as text_file:
+                return text_file.read()
+        except UnicodeDecodeError:
+            try:
+                with codecs.open(filepath, "r") as text_file:
+                    return text_file.read()
+            except UnicodeDecodeError:
+                exit("Can't read the file")
 
 
 def get_most_frequent_words(normalized_text):
@@ -18,9 +40,7 @@ def get_most_frequent_words(normalized_text):
 
 
 def normalize_text(text):
-    for char in text:
-        if char in punctuation:
-            text = text.replace(char, "")
+    text = re.sub("[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]", "", text)
     return text.lower()
 
 
@@ -30,10 +50,13 @@ def get_args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     path_to_file = get_args().file
     text_from_file = load_data(path_to_file)
     if text_from_file is None:
         exit("File not found")
     else:
-        print(get_most_frequent_words(normalize_text(text_from_file)))
+        print("Top words:")
+        top_words = get_most_frequent_words(normalize_text(text_from_file))
+        for elem in top_words:
+            print(elem[0], "-", elem[1])
