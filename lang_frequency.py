@@ -2,6 +2,7 @@ import os
 from collections import Counter
 import argparse
 import re
+from string import punctuation
 
 
 def load_data(filepath):
@@ -10,14 +11,14 @@ def load_data(filepath):
             return text_file.read()
 
 
-def get_most_frequent_words(normalized_text):
+def get_most_frequent_words(raw_text):
     top_words_count = 10
-    return Counter(normalized_text.split(" ")).most_common(top_words_count)
+    return dict(Counter(raw_text.split(" ")).most_common(top_words_count))
 
 
 def normalize_text(text):
-    text = re.sub("[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]", "", text)
-    return text.lower()
+    raw_text = re.sub(r"[" + punctuation + "]", "", text)
+    return raw_text.lower()
 
 
 def get_args():
@@ -34,5 +35,6 @@ if __name__ == "__main__":
     else:
         print("Top words:")
         top_words = get_most_frequent_words(normalize_text(text_from_file))
-        for elem in top_words:
-            print(elem[0], "-", elem[1])
+        print(top_words)
+        for word, count in top_words.items():
+            print(word, "-", count)
