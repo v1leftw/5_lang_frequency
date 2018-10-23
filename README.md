@@ -8,7 +8,17 @@ Example of script launch on Linux, Python 3.5
 
 ```
 $ python pprint_json.py -file <path to file>
-[('the', 49), ('he', 19), ('to', 16), ('of', 15), ('and', 15), ('his', 15), ('in', 12), ('my', 12), ('brother', 11), ('was', 10)]
+Top words:
+the - 49
+he - 19
+to - 16
+of - 15
+and - 15
+his - 15
+my - 13
+in - 12
+brother - 11
+was - 10
 ```
 
 # Project Goals

@@ -34,6 +34,5 @@ if __name__ == "__main__":
         exit("File not found")
     print("Top words:")
     top_words = get_most_frequent_words(normalize_text(text_from_file))
-    print(top_words)
     for word, count in top_words:
         print(word, "-", count)
