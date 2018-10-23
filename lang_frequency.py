@@ -13,11 +13,11 @@ def load_data(filepath):
 
 def get_most_frequent_words(raw_text):
     top_words_count = 10
-    return dict(Counter(raw_text.split(" ")).most_common(top_words_count))
+    return Counter(raw_text.split(" ")).most_common(top_words_count)
 
 
 def normalize_text(text):
-    raw_text = re.sub(r"[" + punctuation + "]", "", text)
+    raw_text = re.sub(r'[{}]'.format(punctuation), "", text)
     return raw_text.lower()
 
 
@@ -32,9 +32,8 @@ if __name__ == "__main__":
     text_from_file = load_data(path_to_file)
     if text_from_file is None:
         exit("File not found")
-    else:
-        print("Top words:")
-        top_words = get_most_frequent_words(normalize_text(text_from_file))
-        print(top_words)
-        for word, count in top_words.items():
-            print(word, "-", count)
+    print("Top words:")
+    top_words = get_most_frequent_words(normalize_text(text_from_file))
+    print(top_words)
+    for word, count in top_words:
+        print(word, "-", count)
